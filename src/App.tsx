@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
 import './App.css';
 
-import {Button} from "./Button";
+import {Button} from "./components/Button";
+import {CountClicker} from "./components/CountClicker";
+import {CountTuner} from "./components/CountTuner";
 
 function App() {
 
@@ -21,17 +23,15 @@ function App() {
 
     return (
         <div className="App">
+            <CountTuner classes={'block2'}/>
             <div className={'block'}>
-                <div className={count === maxValue ? 'red-num' : ''}>{count}</div>
+                <CountClicker classes={count === maxValue ? 'red-num' : 'num'} countNum={count}/>
                 <Button name={'inc'} onClick={CounterFunction} classes={'inc-button'} disabled={count === maxValue}/>
                 <Button name={'reset'} onClick={ResetFunction} classes={'reset-button'} disabled={count === minValue}/>
             </div>
         </div>
     );
 }
-
-
-
 
 
 // Порядок выполнения самопроверочной работы "Счётчик"

@@ -1,31 +1,76 @@
 .App {
     text-align: center;
+    display: flex;
 }
 
 .block {
     margin: 50px auto;
     background-color: rgba(147, 175, 220, 0.84);
     width: 200px;
-    height: 200px;
     font-weight: bold;
     font-size: 30px;
-    border-radius: 30px;
-    border: 5px solid #000388;
+    border-radius: 20px;
+    border: 2px solid #000388;
+}
+
+.num {
+    margin: 20px 5px;
+    border: 1px solid #000388;
+    border-radius: 10px;
+    color: white;
 }
 
 .red-num {
+    margin: 20px 5px;
+    border: 1px solid #000388;
+    border-radius: 10px;
     color: red;
 }
 
 .inc-button {
-    background-color: #0077ff;
-    margin-top: 50px;
+    background-color: rgba(0, 3, 136, 0.66);
+    color: white;
+    margin-top: 10px;
+    margin-bottom: 20px;
     width: 50px;
 }
 
 .reset-button {
-    background-color: #3c86a6;
-    margin-top: 50px;
+    background-color: rgba(0, 3, 136, 0.66);
+    color: white;
+    margin-top: 10px;
+    margin-bottom: 20px;
     margin-left: 20px;
     width: 50px;
+}
+
+/*--------------------------------------------------------------*/
+
+.block2 {
+    margin: 50px auto;
+    background-color: rgba(147, 175, 220, 0.84);
+    width: 200px;
+    font-weight: bold;
+    font-size: 30px;
+    border-radius: 20px;
+    border: 2px solid #000388;
+}
+
+.inputStyle {
+    text-align: center;
+    width: 80px; /* ширина */
+    padding: 5px; /* внутренние отступы */
+    margin: 10px; /* внешние отступы */
+    font-size: 16px; /* размер шрифта */
+    border-radius: 4px; /* скругление углов */
+    border: 1px solid #000388; /* рамка */
+}
+
+.inputWrapper {
+    display: flex;
+    margin: 5px auto;
+}
+
+.inputName {
+    font-size: 14px;
 }
