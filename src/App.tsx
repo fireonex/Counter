@@ -5,12 +5,19 @@ import {Button} from "./components/Button";
 import {CountClicker} from "./components/CountClicker";
 import {CountTuner} from "./components/CountTuner";
 
+
+
 function App() {
 
-    const maxValue = 5;
-    const minValue = 0;
+    const [maxValue, setMaxValue] = useState<number>(4)
+    const [minValue, setMinValue] = useState<number>(2)
+
+    const [temporaryMaxValue, setTemporaryMaxValue] = useState<number>(0)
+    const [temporaryMinValue, setTemporaryMinValue] = useState<number>(0)
+
 
     const [count, setCount] = useState(minValue)
+
 
     const CounterFunction = () => {
         setCount(num => (num <= maxValue ? num + 1 : num))
@@ -23,15 +30,38 @@ function App() {
 
     return (
         <div className="App">
-            <CountTuner classes={'block2'}/>
-            <div className={'block'}>
-                <CountClicker classes={count === maxValue ? 'red-num' : 'num'} countNum={count}/>
-                <Button name={'inc'} onClick={CounterFunction} classes={'inc-button'} disabled={count === maxValue}/>
-                <Button name={'reset'} onClick={ResetFunction} classes={'reset-button'} disabled={count === minValue}/>
-            </div>
+           <div className={'countersBox'}>
+               <CountTuner classes={'block2'}
+                           setMaxValue={setMaxValue}
+                           setMinValue={setMinValue}
+                           setTemporaryMaxValue={setTemporaryMaxValue}
+                           setTemporaryMinValue={setTemporaryMinValue}
+                           temporaryMaxValue={temporaryMaxValue}
+                           temporaryMinValue={temporaryMinValue}
+               />
+               <div className={'block'}>
+
+                   <CountClicker
+                       classes={count === maxValue ? 'red-num' : 'num'}
+                       countNum={count}
+
+                   />
+                   <Button name={'inc'}
+                           onClick={CounterFunction}
+                           classes={'inc-button'}
+                           disabled={count === maxValue}/>
+                   <Button name={'reset'}
+                           onClick={ResetFunction}
+                           classes={'reset-button'}
+                           disabled={count === minValue}/>
+               </div>
+           </div>
         </div>
     );
 }
+
+
+
 
 
 // Порядок выполнения самопроверочной работы "Счётчик"

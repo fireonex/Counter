@@ -2,8 +2,6 @@ import React from "react";
 import '../App.css'
 
 type CountClickerType = {
-    // countFunc: () => void
-    // resetFunc: () => void
     classes: string
     countNum: number
 }

@@ -1,6 +1,12 @@
 .App {
     text-align: center;
+
+}
+
+.countersBox {
     display: flex;
+    width: 50%;
+    margin: 0 auto;
 }
 
 .block {
@@ -64,6 +70,17 @@
     font-size: 16px; /* размер шрифта */
     border-radius: 4px; /* скругление углов */
     border: 1px solid #000388; /* рамка */
+}
+
+.inputErrorStyle {
+    text-align: center;
+    width: 80px; /* ширина */
+    padding: 5px; /* внутренние отступы */
+    margin: 10px; /* внешние отступы */
+    font-size: 16px; /* размер шрифта */
+    border-radius: 4px; /* скругление углов */
+    border: 1px solid red; /* рамка */
+    background-color: rgba(255, 0, 0, 0.31);
 }
 
 .inputWrapper {
