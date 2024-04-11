@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 
 import {Button} from "./components/Button";
@@ -6,17 +6,36 @@ import {CountClicker} from "./components/CountClicker";
 import {CountTuner} from "./components/CountTuner";
 
 
-
 function App() {
 
-    const [maxValue, setMaxValue] = useState<number>(4)
-    const [minValue, setMinValue] = useState<number>(2)
+    const [maxValue, setMaxValue] = useState<number>(5)
 
-    const [temporaryMaxValue, setTemporaryMaxValue] = useState<number>(0)
-    const [temporaryMinValue, setTemporaryMinValue] = useState<number>(0)
+    const [minValue, setMinValue] = useState<number>(0)
 
+    const [temporaryMaxValue, setTemporaryMaxValue] = useState<number>(() => {
+        const valueAsString = localStorage.getItem('counterMaxValue');
+        return valueAsString ? JSON.parse(valueAsString) : maxValue;
+    })
+
+    const [temporaryMinValue, setTemporaryMinValue] = useState<number>(
+        () => {
+            const valueAsString2 = localStorage.getItem('counterMinValue');
+            return valueAsString2 ? JSON.parse(valueAsString2) : minValue;
+        }
+    )
+
+    const [textOnFocusEvent, setTextOnFocusEvent] = useState(false)
 
     const [count, setCount] = useState(minValue)
+
+
+    useEffect(() => {
+        localStorage.setItem('counterMaxValue', JSON.stringify(temporaryMaxValue));
+    }, [temporaryMaxValue]);
+
+    useEffect(() => {
+        localStorage.setItem('counterMinValue', JSON.stringify(temporaryMinValue));
+    }, [temporaryMinValue]);
 
 
     const CounterFunction = () => {
@@ -27,69 +46,53 @@ function App() {
         setCount(minValue)
     }
 
+    const onFocusHandler = () => {
+        setTextOnFocusEvent(!textOnFocusEvent)
+    }
 
     return (
         <div className="App">
-           <div className={'countersBox'}>
-               <CountTuner classes={'block2'}
-                           setMaxValue={setMaxValue}
-                           setMinValue={setMinValue}
-                           setTemporaryMaxValue={setTemporaryMaxValue}
-                           setTemporaryMinValue={setTemporaryMinValue}
-                           temporaryMaxValue={temporaryMaxValue}
-                           temporaryMinValue={temporaryMinValue}
-               />
-               <div className={'block'}>
+            <div className={'countersBox'}>
+                <CountTuner classes={'block2'}
+                            setMaxValue={setMaxValue}
+                            setMinValue={setMinValue}
+                            setTemporaryMaxValue={setTemporaryMaxValue}
+                            setTemporaryMinValue={setTemporaryMinValue}
+                            temporaryMaxValue={temporaryMaxValue}
+                            temporaryMinValue={temporaryMinValue}
+                            onFocusHandler={onFocusHandler}
+                            setCount={setCount}
+                />
+                <div className={'block'}>
 
-                   <CountClicker
-                       classes={count === maxValue ? 'red-num' : 'num'}
-                       countNum={count}
-
-                   />
-                   <Button name={'inc'}
-                           onClick={CounterFunction}
-                           classes={'inc-button'}
-                           disabled={count === maxValue}/>
-                   <Button name={'reset'}
-                           onClick={ResetFunction}
-                           classes={'reset-button'}
-                           disabled={count === minValue}/>
-               </div>
-           </div>
+                    <CountClicker
+                        classes={count === maxValue ? 'red-num' : 'num'}
+                        countNum={count}
+                        temporaryMaxValue={temporaryMaxValue}
+                        temporaryMinValue={temporaryMinValue}
+                        textOnFocusEvent={textOnFocusEvent}
+                    />
+                    <div className={'buttonsWrapper'}>
+                        <Button name={'inc'}
+                                onClick={CounterFunction}
+                                classes={'inc-button'}
+                                disabled={count === maxValue
+                                    || temporaryMaxValue < 0
+                                    || temporaryMinValue < 0
+                                    || temporaryMaxValue <= temporaryMinValue}/>
+                        <Button name={'reset'}
+                                onClick={ResetFunction}
+                                classes={'reset-button'}
+                                disabled={count === minValue
+                                    || temporaryMaxValue < 0
+                                    || temporaryMinValue < 0
+                                    || temporaryMaxValue <= temporaryMinValue}/>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }
 
-
-
-
-
-// Порядок выполнения самопроверочной работы "Счётчик"
-// Всё, что надо сделать, мы уже делали в TodoList!
-// 1. Создаём новый проект
-// (create-react-app --template typescript)
-// 2. Верстаем внешний вид минимально
-// (внешний вид - пофиг, но структура должна быть)
-// 3. Дробим на подкомпоненты
-// (табло, кнопки...Один уровень вложенности должен быть,
-// больше - не надо.)    IMPORTANT!!!
-// 4. Создаём локальный стэйт и
-// отображаем его (useState, props) IMPORTANT!!!
-// 5. Пишем функции и передаём вглубь на кнопки
-// (callbacks, onClick) IMPORTANT!!!
-// Минимально норм, если всё работает.
-//
-// 6. Дорабатываем кнопки (делаем дизэйблы по условию:
-//     <button disabled={boolean}>Add</button> )
-// 7. Дорабатываем табло
-// (меняем цвет: <div className={условие => string}></div>)
-// Максимально норм.
-//
-// 8. Для продвинутых (не обязательно):
-// кнопку реализовать как один компонент и
-// использовать два раза с разными props
-//
-// Йоу!!! Ты - высший красавчик :)
-// ... или красотка :)))
 
 export default App;

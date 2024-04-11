@@ -11,16 +11,22 @@ type CountClickerType = {
     setTemporaryMinValue: (temporaryMinValue: number) => void;
     temporaryMaxValue: number
     temporaryMinValue: number
+    onFocusHandler: () => void
+    setCount: (count: number) => void
 }
 
 
-export const CountTuner = ({classes,
+export const CountTuner = ({
+                               classes,
                                setMaxValue,
                                setMinValue,
                                setTemporaryMaxValue,
                                setTemporaryMinValue,
                                temporaryMaxValue,
-                               temporaryMinValue}:CountClickerType) => {
+                               temporaryMinValue,
+                               onFocusHandler,
+                               setCount
+                           }: CountClickerType) => {
 
 
     const setMaxValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -34,9 +40,12 @@ export const CountTuner = ({classes,
     const saveButtonHandler = () => {
         setMaxValue(temporaryMaxValue)
         setMinValue(temporaryMinValue)
+        setCount(temporaryMinValue)
+
+        localStorage.setItem('counterMaxValue', JSON.stringify(temporaryMaxValue));
+        localStorage.setItem('counterMinValue', JSON.stringify(temporaryMinValue));
     }
 
-    //{temporaryMaxValue < 0 ? 'inputErrorStyle' : 'inputStyle'}
 
     return (
         <div className={classes}>
@@ -45,6 +54,8 @@ export const CountTuner = ({classes,
                 <input type="number"
                        className={temporaryMaxValue < 0 ? 'inputErrorStyle' : 'inputStyle'}
                        onChange={setMaxValueHandler}
+                       onFocus={() => onFocusHandler()}
+                       value={temporaryMaxValue}
                 />
             </div>
             <div className={'inputWrapper'}>
@@ -52,6 +63,8 @@ export const CountTuner = ({classes,
                 <input type="number"
                        className={temporaryMinValue < 0 ? 'inputErrorStyle' : 'inputStyle'}
                        onChange={setMinValueHandler}
+                       onFocus={() => onFocusHandler()}
+                       value={temporaryMinValue}
                 />
             </div>
             <Button name={'set'} classes={'inc-button'} onClick={saveButtonHandler}

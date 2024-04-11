@@ -1,6 +1,5 @@
 .App {
     text-align: center;
-
 }
 
 .countersBox {
@@ -26,11 +25,36 @@
     color: white;
 }
 
+.countError {
+    color: red;
+    font-size: 16px;
+    height: 32px;
+    text-align: center;
+    margin-top: 8px;
+}
+
+.enterValueText {
+    font-size: 14px;
+    height: 32px;
+    text-align: center;
+    margin-top: 8px;
+    color: white;
+}
+
 .red-num {
     margin: 20px 5px;
     border: 1px solid #000388;
     border-radius: 10px;
     color: red;
+}
+
+.buttonsWrapper {
+    margin-top: 52px;
+}
+
+button:disabled {
+    background-color: rgba(0, 3, 136, 0.31);
+    cursor: not-allowed; /* Курсор в виде запрещающего знака */
 }
 
 .inc-button {
@@ -52,6 +76,10 @@
 
 /*--------------------------------------------------------------*/
 
+input:focus {
+    outline: transparent;
+}
+
 .block2 {
     margin: 50px auto;
     background-color: rgba(147, 175, 220, 0.84);
@@ -62,30 +90,29 @@
     border: 2px solid #000388;
 }
 
-.inputStyle {
+
+.inputWrapper {
+    display: flex;
+    margin: 5px 5px;
+    justify-content: space-between;
+}
+
+input {
     text-align: center;
     width: 80px; /* ширина */
     padding: 5px; /* внутренние отступы */
     margin: 10px; /* внешние отступы */
     font-size: 16px; /* размер шрифта */
     border-radius: 4px; /* скругление углов */
+}
+
+.inputStyle {
     border: 1px solid #000388; /* рамка */
 }
 
 .inputErrorStyle {
-    text-align: center;
-    width: 80px; /* ширина */
-    padding: 5px; /* внутренние отступы */
-    margin: 10px; /* внешние отступы */
-    font-size: 16px; /* размер шрифта */
-    border-radius: 4px; /* скругление углов */
     border: 1px solid red; /* рамка */
     background-color: rgba(255, 0, 0, 0.31);
-}
-
-.inputWrapper {
-    display: flex;
-    margin: 5px auto;
 }
 
 .inputName {
