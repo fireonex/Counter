@@ -41,9 +41,6 @@ export const CountTuner = ({
         setMaxValue(temporaryMaxValue)
         setMinValue(temporaryMinValue)
         setCount(temporaryMinValue)
-
-        localStorage.setItem('counterMaxValue', JSON.stringify(temporaryMaxValue));
-        localStorage.setItem('counterMinValue', JSON.stringify(temporaryMinValue));
     }
 
 

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import './App.css';
 
 import {Button} from "./components/Button";
@@ -12,30 +12,13 @@ function App() {
 
     const [minValue, setMinValue] = useState<number>(0)
 
-    const [temporaryMaxValue, setTemporaryMaxValue] = useState<number>(() => {
-        const valueAsString = localStorage.getItem('counterMaxValue');
-        return valueAsString ? JSON.parse(valueAsString) : maxValue;
-    })
+    const [temporaryMaxValue, setTemporaryMaxValue] = useState<number>(maxValue)
 
-    const [temporaryMinValue, setTemporaryMinValue] = useState<number>(
-        () => {
-            const valueAsString2 = localStorage.getItem('counterMinValue');
-            return valueAsString2 ? JSON.parse(valueAsString2) : minValue;
-        }
-    )
+    const [temporaryMinValue, setTemporaryMinValue] = useState<number>(minValue)
 
     const [textOnFocusEvent, setTextOnFocusEvent] = useState(false)
 
     const [count, setCount] = useState(minValue)
-
-
-    useEffect(() => {
-        localStorage.setItem('counterMaxValue', JSON.stringify(temporaryMaxValue));
-    }, [temporaryMaxValue]);
-
-    useEffect(() => {
-        localStorage.setItem('counterMinValue', JSON.stringify(temporaryMinValue));
-    }, [temporaryMinValue]);
 
 
     const CounterFunction = () => {
