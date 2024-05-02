@@ -1,63 +1,53 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './App.css';
 import {Button} from "./components/Button";
 import {CountClicker} from "./components/CountClicker";
 import {CountTuner} from "./components/CountTuner";
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootStateType} from "./store";
+import {CounterIncreaseAC, CounterState, OnFocusAC, ResetCountAC} from "./CounterReducers";
 
 
 function App() {
 
-    const [maxValue, setMaxValue] = useState<number>(5)
+    let countState = useSelector<AppRootStateType, CounterState>(state => state.count)
 
-    const [minValue, setMinValue] = useState<number>(0)
+    let dispatch = useDispatch()
 
-    const [textOnFocusEvent, setTextOnFocusEvent] = useState(false)
-
-    const [count, setCount] = useState(minValue)
-
-
-    const CounterFunction = () => {
-        setCount(num => (num <= maxValue ? num + 1 : num))
+    const incrementCount = () => {
+        dispatch(CounterIncreaseAC())
     }
 
-    const ResetFunction = () => {
-        setCount(minValue)
+    const resetCount = () => {
+        dispatch(ResetCountAC())
     }
 
-    const onFocusHandler = () => {
-        setTextOnFocusEvent(!textOnFocusEvent)
+    const toggleFocus = () => {
+        dispatch(OnFocusAC())
     }
 
-    const isIncDisabled = count === maxValue || maxValue <= minValue || maxValue < 0 || minValue < 0;
-    const isResetDisabled = count === minValue || maxValue <= minValue || maxValue < 0 || minValue < 0;
+    const isIncDisabled = countState.count === countState.maxValue || countState.maxValue <= countState.minValue || countState.maxValue < 0 || countState.minValue < 0;
+    const isResetDisabled = countState.count === countState.minValue || countState.maxValue <= countState.minValue || countState.maxValue < 0 || countState.minValue < 0;
 
 
     return (
         <div className="App">
             <div className={'countersBox'}>
                 <CountTuner classes={'block2'}
-                            setMaxValue={setMaxValue}
-                            setMinValue={setMinValue}
-                            maxValue={maxValue}
-                            minValue={minValue}
-                            onFocusHandler={onFocusHandler}
-                            setCount={setCount}
+                            onFocusHandler={toggleFocus}
                 />
                 <div className={'block'}>
                     <CountClicker
-                        classes={count === maxValue ? 'red-num' : 'num'}
-                        countNum={count}
-                        maxValue={maxValue}
-                        minValue={minValue}
-                        textOnFocusEvent={textOnFocusEvent}
+                        classes={countState.count === countState.maxValue ? 'red-num' : 'num'}
+                        textOnFocusEvent={countState.isFocused}
                     />
                     <div className={'buttonsWrapper'}>
                         <Button name={'inc'}
-                                onClick={CounterFunction}
+                                onClick={incrementCount}
                                 classes={'inc-button'}
                                 disabled={isIncDisabled}/>
                         <Button name={'reset'}
-                                onClick={ResetFunction}
+                                onClick={resetCount}
                                 classes={'reset-button'}
                                 disabled={isResetDisabled}/>
                     </div>

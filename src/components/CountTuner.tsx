@@ -1,42 +1,33 @@
 import React, {ChangeEvent} from "react";
 import '../App.css'
 import {Button} from "./Button";
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootStateType} from "../store";
+import {CounterState, SaveValuesAC, UpdateMaxValueAC, UpdateMinValueAC} from "../CounterReducers";
 
 
 type CountClickerType = {
     classes: string
-    setMaxValue: (maxValue: number) => void
-    setMinValue: (minValue: number) => void
-    maxValue: number
-    minValue: number
     onFocusHandler: () => void
-    setCount: (count: number) => void
 }
 
 
-export const CountTuner = ({
-                               classes,
-                               setMaxValue,
-                               setMinValue,
-                               minValue,
-                               maxValue,
-                               onFocusHandler,
-                               setCount
-                           }: CountClickerType) => {
+export const CountTuner = ({classes, onFocusHandler}: CountClickerType) => {
+
+    let countState = useSelector<AppRootStateType, CounterState>(state => state.count)
+    let dispatch = useDispatch()
 
 
-    const setMaxValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setMaxValue(Number(e.target.value))
+    const updateMaxValue = (e: ChangeEvent<HTMLInputElement>) => {
+        dispatch(UpdateMaxValueAC(Number(e.currentTarget.value)))
     }
 
-    const setMinValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setMinValue(Number(e.target.value))
+    const updateMinValue = (e: ChangeEvent<HTMLInputElement>) => {
+        dispatch(UpdateMinValueAC(Number(e.currentTarget.value)))
     }
 
-    const saveButtonHandler = () => {
-        setMaxValue(maxValue)
-        setMinValue(minValue)
-        setCount(minValue)
+    const saveValues = () => {
+        dispatch(SaveValuesAC(countState.maxValue, countState.minValue))
     }
 
 
@@ -45,23 +36,23 @@ export const CountTuner = ({
             <div className={'inputWrapper'}>
                 <p className={'inputName'}>Max value:</p>
                 <input type="number"
-                       className={maxValue < 0 ? 'inputErrorStyle' : 'inputStyle'}
-                       onChange={setMaxValueHandler}
+                       className={countState.maxValue < 0 ? 'inputErrorStyle' : 'inputStyle'}
+                       onChange={updateMaxValue}
                        onFocus={() => onFocusHandler()}
-                       value={maxValue}
+                       value={countState.maxValue}
                 />
             </div>
             <div className={'inputWrapper'}>
                 <p className={'inputName'}>Start value:</p>
                 <input type="number"
-                       className={minValue < 0 ? 'inputErrorStyle' : 'inputStyle'}
-                       onChange={setMinValueHandler}
+                       className={countState.minValue < 0 ? 'inputErrorStyle' : 'inputStyle'}
+                       onChange={updateMinValue}
                        onFocus={() => onFocusHandler()}
-                       value={minValue}
+                       value={countState.minValue}
                 />
             </div>
-            <Button name={'set'} classes={'inc-button'} onClick={saveButtonHandler}
-                    disabled={maxValue < 0 || minValue < 0}/>
+            <Button name={'set'} classes={'inc-button'} onClick={saveValues}
+                    disabled={countState.maxValue < 0 || countState.minValue < 0}/>
         </div>
     )
 }

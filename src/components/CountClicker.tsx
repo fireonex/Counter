@@ -1,29 +1,27 @@
 import React from "react";
 import '../App.css'
+import {useSelector} from "react-redux";
+import {AppRootStateType} from "../store";
+import {CounterState} from "../CounterReducers";
 
 type CountClickerType = {
     classes: string
-    countNum: number
-    maxValue: number
-    minValue: number
     textOnFocusEvent: boolean
 }
 
-export const CountClicker = ({
-                                 classes,
-                                 countNum,
-                                 maxValue,
-                                 minValue,
-                                 textOnFocusEvent
-                             }: CountClickerType) => {
+export const CountClicker = ({classes, textOnFocusEvent}: CountClickerType) => {
+
+    let countState = useSelector<AppRootStateType, CounterState>(state => state.count)
+
+
     return (
         <div className={classes}>
             {
-                maxValue < 0 || minValue < 0 || maxValue <= minValue
+                countState.maxValue < 0 || countState.minValue < 0 || countState.maxValue <= countState.minValue
                     ? <div className={'countError'}>Incorrect value!</div>
                     : textOnFocusEvent
                         ? <div className={'enterValueText'}>enter values and press 'set'</div>
-                        : countNum
+                        : countState.count
             }
         </div>
     )
