@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import './App.css';
-
 import {Button} from "./components/Button";
 import {CountClicker} from "./components/CountClicker";
 import {CountTuner} from "./components/CountTuner";
@@ -11,10 +10,6 @@ function App() {
     const [maxValue, setMaxValue] = useState<number>(5)
 
     const [minValue, setMinValue] = useState<number>(0)
-
-    const [temporaryMaxValue, setTemporaryMaxValue] = useState<number>(maxValue)
-
-    const [temporaryMinValue, setTemporaryMinValue] = useState<number>(minValue)
 
     const [textOnFocusEvent, setTextOnFocusEvent] = useState(false)
 
@@ -33,43 +28,38 @@ function App() {
         setTextOnFocusEvent(!textOnFocusEvent)
     }
 
+    const isIncDisabled = count === maxValue || maxValue <= minValue || maxValue < 0 || minValue < 0;
+    const isResetDisabled = count === minValue || maxValue <= minValue || maxValue < 0 || minValue < 0;
+
+
     return (
         <div className="App">
             <div className={'countersBox'}>
                 <CountTuner classes={'block2'}
                             setMaxValue={setMaxValue}
                             setMinValue={setMinValue}
-                            setTemporaryMaxValue={setTemporaryMaxValue}
-                            setTemporaryMinValue={setTemporaryMinValue}
-                            temporaryMaxValue={temporaryMaxValue}
-                            temporaryMinValue={temporaryMinValue}
+                            maxValue={maxValue}
+                            minValue={minValue}
                             onFocusHandler={onFocusHandler}
                             setCount={setCount}
                 />
                 <div className={'block'}>
-
                     <CountClicker
                         classes={count === maxValue ? 'red-num' : 'num'}
                         countNum={count}
-                        temporaryMaxValue={temporaryMaxValue}
-                        temporaryMinValue={temporaryMinValue}
+                        maxValue={maxValue}
+                        minValue={minValue}
                         textOnFocusEvent={textOnFocusEvent}
                     />
                     <div className={'buttonsWrapper'}>
                         <Button name={'inc'}
                                 onClick={CounterFunction}
                                 classes={'inc-button'}
-                                disabled={count === maxValue
-                                    || temporaryMaxValue < 0
-                                    || temporaryMinValue < 0
-                                    || temporaryMaxValue <= temporaryMinValue}/>
+                                disabled={isIncDisabled}/>
                         <Button name={'reset'}
                                 onClick={ResetFunction}
                                 classes={'reset-button'}
-                                disabled={count === minValue
-                                    || temporaryMaxValue < 0
-                                    || temporaryMinValue < 0
-                                    || temporaryMaxValue <= temporaryMinValue}/>
+                                disabled={isResetDisabled}/>
                     </div>
                 </div>
             </div>

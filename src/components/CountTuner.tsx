@@ -7,10 +7,8 @@ type CountClickerType = {
     classes: string
     setMaxValue: (maxValue: number) => void
     setMinValue: (minValue: number) => void
-    setTemporaryMaxValue: (temporaryMaxValue: number) => void;
-    setTemporaryMinValue: (temporaryMinValue: number) => void;
-    temporaryMaxValue: number
-    temporaryMinValue: number
+    maxValue: number
+    minValue: number
     onFocusHandler: () => void
     setCount: (count: number) => void
 }
@@ -20,27 +18,25 @@ export const CountTuner = ({
                                classes,
                                setMaxValue,
                                setMinValue,
-                               setTemporaryMaxValue,
-                               setTemporaryMinValue,
-                               temporaryMaxValue,
-                               temporaryMinValue,
+                               minValue,
+                               maxValue,
                                onFocusHandler,
                                setCount
                            }: CountClickerType) => {
 
 
     const setMaxValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setTemporaryMaxValue(Number(e.target.value))
+        setMaxValue(Number(e.target.value))
     }
 
     const setMinValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setTemporaryMinValue(Number(e.target.value))
+        setMinValue(Number(e.target.value))
     }
 
     const saveButtonHandler = () => {
-        setMaxValue(temporaryMaxValue)
-        setMinValue(temporaryMinValue)
-        setCount(temporaryMinValue)
+        setMaxValue(maxValue)
+        setMinValue(minValue)
+        setCount(minValue)
     }
 
 
@@ -49,23 +45,23 @@ export const CountTuner = ({
             <div className={'inputWrapper'}>
                 <p className={'inputName'}>Max value:</p>
                 <input type="number"
-                       className={temporaryMaxValue < 0 ? 'inputErrorStyle' : 'inputStyle'}
+                       className={maxValue < 0 ? 'inputErrorStyle' : 'inputStyle'}
                        onChange={setMaxValueHandler}
                        onFocus={() => onFocusHandler()}
-                       value={temporaryMaxValue}
+                       value={maxValue}
                 />
             </div>
             <div className={'inputWrapper'}>
                 <p className={'inputName'}>Start value:</p>
                 <input type="number"
-                       className={temporaryMinValue < 0 ? 'inputErrorStyle' : 'inputStyle'}
+                       className={minValue < 0 ? 'inputErrorStyle' : 'inputStyle'}
                        onChange={setMinValueHandler}
                        onFocus={() => onFocusHandler()}
-                       value={temporaryMinValue}
+                       value={minValue}
                 />
             </div>
             <Button name={'set'} classes={'inc-button'} onClick={saveButtonHandler}
-                    disabled={temporaryMaxValue < 0 || temporaryMinValue < 0}/>
+                    disabled={maxValue < 0 || minValue < 0}/>
         </div>
     )
 }

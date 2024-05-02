@@ -4,22 +4,22 @@ import '../App.css'
 type CountClickerType = {
     classes: string
     countNum: number
-    temporaryMaxValue: number
-    temporaryMinValue: number
+    maxValue: number
+    minValue: number
     textOnFocusEvent: boolean
 }
 
 export const CountClicker = ({
                                  classes,
                                  countNum,
-                                 temporaryMaxValue,
-                                 temporaryMinValue,
+                                 maxValue,
+                                 minValue,
                                  textOnFocusEvent
                              }: CountClickerType) => {
     return (
         <div className={classes}>
             {
-                temporaryMaxValue < 0 || temporaryMinValue < 0 || temporaryMaxValue <= temporaryMinValue
+                maxValue < 0 || minValue < 0 || maxValue <= minValue
                     ? <div className={'countError'}>Incorrect value!</div>
                     : textOnFocusEvent
                         ? <div className={'enterValueText'}>enter values and press 'set'</div>
