@@ -17,7 +17,6 @@ export const CountTuner = ({classes, onFocusHandler}: CountClickerType) => {
     let countState = useSelector<AppRootStateType, CounterState>(state => state.count)
     let dispatch = useDispatch()
 
-
     const updateMaxValue = (e: ChangeEvent<HTMLInputElement>) => {
         dispatch(UpdateMaxValueAC(Number(e.currentTarget.value)))
     }

@@ -13,7 +13,6 @@ export const CountClicker = ({classes, textOnFocusEvent}: CountClickerType) => {
 
     let countState = useSelector<AppRootStateType, CounterState>(state => state.count)
 
-
     return (
         <div className={classes}>
             {

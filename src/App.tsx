@@ -26,8 +26,15 @@ function App() {
         dispatch(OnFocusAC())
     }
 
-    const isIncDisabled = countState.count === countState.maxValue || countState.maxValue <= countState.minValue || countState.maxValue < 0 || countState.minValue < 0;
-    const isResetDisabled = countState.count === countState.minValue || countState.maxValue <= countState.minValue || countState.maxValue < 0 || countState.minValue < 0;
+    const isIncDisabled = countState.count === countState.maxValue
+        || countState.maxValue <= countState.minValue
+        || countState.maxValue < 0
+        || countState.minValue < 0;
+
+    const isResetDisabled = countState.count === countState.minValue
+        || countState.maxValue <= countState.minValue
+        || countState.maxValue < 0
+        || countState.minValue < 0;
 
 
     return (
